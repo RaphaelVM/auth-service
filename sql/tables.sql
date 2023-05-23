@@ -18,7 +18,7 @@
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `authDB`
+-- Database: `userdb`
 --
 CREATE DATABASE IF NOT EXISTS `userdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
