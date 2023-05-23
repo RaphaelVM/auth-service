@@ -13,6 +13,7 @@ spring:
       port: 3306
       database: '${MYSQL_DATABASE:userdb}'
       username: '${MYSQL_USER:root}'
+      password: '${MYSQL_ROOT_PASSWORD:}'
 
 eureka:
   instance:

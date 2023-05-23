@@ -35,7 +35,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: authdb-cm
-                  key: user
+                  key: MYSQL_USER
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: MYSQL_ROOT_PASSWORD
 
 ---
 
