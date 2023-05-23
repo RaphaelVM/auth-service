@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: userdb-cm
 data:
-  url: "jdbc:mysql://userdb-service:3306/userdb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
+  url: "jdbc:mysql://userdb-service:3306/userdb"
   database: "userdb"
   username: "root"
   password: "root"
