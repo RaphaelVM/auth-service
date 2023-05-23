@@ -7,13 +7,21 @@ server:
 spring:
   application:
     name: AUTH-SERVICE
-  data:
-    mysql:
-      host: '${MYSQL_HOST:localhost}'
-      port: 3306
-      database: '${MYSQL_DATABASE:userdb}'
-      username: '${MYSQL_USER:root}'
-      password: '${MYSQL_ROOT_PASSWORD:}'
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    validationQuery: SELECT 1
+    initialize-model: always
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
 eureka:
   instance:

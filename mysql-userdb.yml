@@ -3,10 +3,11 @@ kind: ConfigMap
 metadata:
   name: userdb-cm
 data:
-  host: userdb-service
-  database: userdb
-  MYSQL_USER: root
-  MYSQL_ROOT_PASSWORD:
+  url: "jdbc:mysql://userdb:3306/userdb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
+  database: "userdb"
+  username: "root"
+  password: "root"
+  root_password: "root"
 
 ---
 
@@ -27,15 +28,29 @@ spec:
         app: userdb
       name: userdb-service
     
-    
     spec:
       containers:
         - image: mysql:latest
           name: userdb
-          
           ports:
             - containerPort: 3306
               name: userdb
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: root_password
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: database
 
 ---
 

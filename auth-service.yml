@@ -21,26 +21,21 @@ spec:
           ports:
             - containerPort: 9898
           env:
-            - name: MYSQL_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: authdb-cm
-                  key: host
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: authdb-cm
-                  key: database
-            - name: MYSQL_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: authdb-cm
-                  key: MYSQL_USER
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_URL
               valueFrom:
                 configMapKeyRef:
                   name: userdb-cm
-                  key: MYSQL_ROOT_PASSWORD
+                  key: url
+            - name: MYSQL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: userdb-cm
+                  key: password
 
 ---
 
