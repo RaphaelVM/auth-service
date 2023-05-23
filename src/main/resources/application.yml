@@ -1,12 +1,37 @@
+### Global
+server:
+  port: 9898
+### End Global
+
+### Kubernetes
 spring:
   application:
     name: AUTH-SERVICE
+  data:
+    mysql:
+      host: '${MYSQL_HOST:localhost}'
+      port: 3306
+      database: '${MYSQL_DATABASE:userdb}'
+      username: '${MYSQL_USER:root}'
 
 eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
   client:
-    service-url:
-      defaultZone : http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+### End Kubernetes
 
-
-server:
-  port: 9898
+### Local
+#spring:
+#  application:
+#    name: AUTH-SERVICE
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone : http://localhost:8761/eureka/
+### End Local

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: userdb-cm
+data:
+  host: userdb-service
+  database: userdb
+  user: root
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userdb
+  labels:
+    app: userdb
+spec:
+  selector:
+    matchLabels:
+      app: userdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: userdb
+      name: userdb-service
+    
+    
+    spec:
+      containers:
+        - image: mysql:latest
+          name: userdb
+          
+          ports:
+            - containerPort: 3306
+              name: userdb
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: userdb
+  name: userdb-service
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: userdb
+  clusterIP: None
