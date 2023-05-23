@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: userdb-cm
 data:
-  url: "jdbc:mysql://userdb:3306/userdb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
+  url: "jdbc:mysql://userdb-service:3306/userdb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
   database: "userdb"
   username: "root"
   password: "root"
@@ -37,20 +37,33 @@ spec:
               name: userdb
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: userdb-cm
-                  key: root_password
+              value: "root"
             - name: MYSQL_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: userdb-cm
-                  key: password
+              value: "root"
             - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: userdb-cm
-                  key: database
+              value: "userdb"
+          volumeMounts:
+            - name: userdb-persistent-storage
+              mountPath: /var/lib/mysql
+
+      volumes:
+        - name: userdb-persistent-storage
+          persistentVolumeClaim:
+            claimName: userdb-pvc
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: userdb-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 250Mi
 
 ---
 
