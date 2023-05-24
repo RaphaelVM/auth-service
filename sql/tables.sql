@@ -1,4 +1,4 @@
-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
@@ -56,13 +56,12 @@ DROP TABLE IF EXISTS `user_credential`;
 CREATE TABLE `user_credential` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         `role_id` int(11) NOT NULL DEFAULT '0',
-                        `Email` varchar(100) NOT NULL,
-                        `Password` varchar(100) NOT NULL,
-                        `Salt` LONGTEXT NOT NULL,
+                        `name` varchar(100) NOT NULL,
+                        `email` varchar(100) NOT NULL,
+                        `password` varchar(100) NOT NULL,
                         PRIMARY KEY (`id`),
                         KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 ALTER TABLE userdb.`user_credential` MODIFY COLUMN Password LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
-ALTER TABLE userdb.`user_credential` MODIFY COLUMN Salt LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
