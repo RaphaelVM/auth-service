@@ -41,8 +41,8 @@ data:
     /*!40000 ALTER TABLE `role`
         DISABLE KEYS */;
     INSERT INTO `role`
-    VALUES (0, 'User'),
-           (1, 'Admin');
+    VALUES (1, 'User'),
+           (2, 'Admin');
     /*!40000 ALTER TABLE `role`
         ENABLE KEYS */;
     UNLOCK TABLES;

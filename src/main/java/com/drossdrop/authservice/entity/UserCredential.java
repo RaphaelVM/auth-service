@@ -14,6 +14,7 @@ public class UserCredential {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int role_id;
     private String username;
     private String email;
     private String password;
