@@ -26,9 +26,9 @@ public class AuthConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/api/auth/register", "/api/auth/token").permitAll()
-                    .requestMatchers("/api/auth/validate").hasRole("ADMIN")
-//                .requestMatchers("/api/auth/register", "/api/auth/token", "/api/auth/validate").permitAll()
+//                    .requestMatchers("/api/auth/register", "/api/auth/token").permitAll()
+//                    .requestMatchers("/api/auth/validate").hasRole("ADMIN")
+                .requestMatchers("/api/auth/register", "/api/auth/token", "/api/auth/validate").permitAll()
                 .and()
                 .build();
     }
