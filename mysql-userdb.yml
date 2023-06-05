@@ -33,7 +33,7 @@ data:
         `username`  varchar(100) NOT NULL,
         `email`     varchar(100) NOT NULL,
         `password`  varchar(100) NOT NULL,
-        `role_name` varchar(100) NOT NULL DEFAULT 'USER',
+        `role_name` varchar(100) DEFAULT 'User',
         PRIMARY KEY (`id`),
         CONSTRAINT `uc_user` UNIQUE (`username`, `email`)
     ) ENGINE = InnoDB
