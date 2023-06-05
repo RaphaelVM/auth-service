@@ -1,8 +1,6 @@
 package com.drossdrop.authservice.config;
 
 import com.drossdrop.authservice.entity.UserCredential;
-import com.drossdrop.authservice.repository.UserCredentialRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +15,10 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String roleName;
 
-    @Autowired
-    UserCredentialRepository userCredentialRepository;
-
     public CustomUserDetails(UserCredential userCredential) {
         this.username = userCredential.getUsername();
         this.password = userCredential.getPassword();
-        this.roleName = userCredentialRepository.findByUsername(userCredential.getUsername()).get().getRoleName();
+        this.roleName = userCredential.getRoleName();
     }
 
     @Override
@@ -44,10 +39,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public String getRoleName() {
-        return roleName;
     }
 
     @Override
