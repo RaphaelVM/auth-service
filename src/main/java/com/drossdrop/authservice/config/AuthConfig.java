@@ -22,7 +22,7 @@ public class AuthConfig {
         return new CustomUserDetailsService();
     }
 
-
+    //push
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
