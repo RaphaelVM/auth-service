@@ -24,8 +24,7 @@ public class AuthService {
     }
 
     public String generateToken(String username) {
-        int role = repository.findByUsername(username).get().getRole_id();
-        return jwtService.generateToken(username, role);
+        return jwtService.generateToken(repository.findByUsername(username).get());
     }
 
     public void validateToken(String token) {

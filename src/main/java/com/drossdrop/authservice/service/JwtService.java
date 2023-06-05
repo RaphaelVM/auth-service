@@ -1,5 +1,6 @@
 package com.drossdrop.authservice.service;
 
+import com.drossdrop.authservice.entity.UserCredential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -27,17 +26,17 @@ public class JwtService {
     }
 
 
-    public String generateToken(String userName, int role) {
-        Map<String, Object> claims = new HashMap<>(
-                Map.of("role", role)
+    public String generateToken(UserCredential user) {
+        Set<String> roles = new HashSet<>(
+                Collections.singletonList(user.getRoleName())
         );
-        return createToken(claims, userName);
+        return createToken(user, roles);
     }
 
-    private String createToken(Map<String, Object> claims, String userName) {
+    private String createToken(UserCredential user, Set<String> roles) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(String.format("%s,%s", user.getId(), user.getUsername()))
+                .claim("roles", roles)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();

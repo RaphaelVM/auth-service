@@ -3,6 +3,7 @@ package com.drossdrop.authservice.controller;
 import com.drossdrop.authservice.dto.AuthRequest;
 import com.drossdrop.authservice.entity.UserCredential;
 import com.drossdrop.authservice.service.AuthService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +35,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate")
+    @RolesAllowed({"Admin"})
     public String validateToken(@RequestParam("token") String token) {
         service.validateToken(token);
         return "Token is valid";
