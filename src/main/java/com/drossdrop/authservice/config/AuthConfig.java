@@ -28,7 +28,7 @@ public class AuthConfig {
         return http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/register", "/api/auth/token").permitAll()
-                .requestMatchers("/api/auth/validate").hasRole("Admin")
+                .requestMatchers("/api/auth/validate").hasAnyAuthority("Admin")
 //                .requestMatchers("/api/auth/register", "/api/auth/token", "/api/auth/validate").permitAll()
                 .and()
                 .build();
