@@ -29,11 +29,11 @@ data:
     /*!40101 SET character_set_client = utf8 */;
     CREATE TABLE `user_credential`
     (
-        `id`       int(11)      NOT NULL AUTO_INCREMENT,
-        `username` varchar(100) NOT NULL,
-        `email`    varchar(100) NOT NULL,
-        `password` varchar(100) NOT NULL,
-        `roleName` varchar(100) NOT NULL DEFAULT 'USER',
+        `id`        int(11)      NOT NULL AUTO_INCREMENT,
+        `username`  varchar(100) NOT NULL,
+        `email`     varchar(100) NOT NULL,
+        `password`  varchar(100) NOT NULL,
+        `role_name` varchar(100) NOT NULL DEFAULT 'USER',
         PRIMARY KEY (`id`),
         CONSTRAINT `uc_user` UNIQUE (`username`, `email`)
     ) ENGINE = InnoDB
