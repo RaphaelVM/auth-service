@@ -1,10 +1,10 @@
 package com.drossdrop.authservice.config;
 
 import com.drossdrop.authservice.entity.UserCredential;
+import com.drossdrop.authservice.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -17,16 +17,22 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String roleName;
 
+    @Autowired
+    UserCredentialRepository userCredentialRepository;
+
     public CustomUserDetails(UserCredential userCredential) {
         this.username = userCredential.getUsername();
         this.password = userCredential.getPassword();
-        this.roleName = userCredential.getRoleName();
+        this.roleName = userCredentialRepository.findByUsername(userCredential.getUsername()).get().getRoleName();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(roleName));
+
+        System.out.println("authorities list: " + authorities);
+
         return authorities;
     }
 

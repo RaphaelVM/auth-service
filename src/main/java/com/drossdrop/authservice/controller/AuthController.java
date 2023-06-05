@@ -35,7 +35,6 @@ public class AuthController {
     }
 
     @GetMapping("/validate")
-    @RolesAllowed({"Admin"})
     public String validateToken(@RequestParam("token") String token) {
         service.validateToken(token);
         return "Token is valid";
