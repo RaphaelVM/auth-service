@@ -7,6 +7,11 @@ server:
 spring:
   application:
     name: AUTH-SERVICE
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
   datasource:
     url: ${MYSQL_URL}
     username: ${MYSQL_USERNAME}
