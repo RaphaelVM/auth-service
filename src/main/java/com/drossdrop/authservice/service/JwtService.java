@@ -1,6 +1,8 @@
 package com.drossdrop.authservice.service;
 
 import com.drossdrop.authservice.entity.UserCredential;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -31,7 +33,7 @@ public class JwtService {
 
     private String createToken(UserCredential user, Set<String> roles) {
         return Jwts.builder()
-                .setSubject(String.format("%s,%s", user.getId(), user.getUsername()))
+                .setSubject(String.format("%s", user.getId()))
                 .claim("roles", roles)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
@@ -41,5 +43,21 @@ public class JwtService {
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String getSubjectFromToken(String token) {
+
+        Claims claims = decodeToken(token);
+
+        return claims.getSubject();
+    }
+
+    public Claims decodeToken(String token) {
+        Jws<Claims> parsedToken = Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token);
+
+        return parsedToken.getBody();
     }
 }

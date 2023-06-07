@@ -1,6 +1,9 @@
 package com.drossdrop.authservice.service;
 
+import com.drossdrop.authservice.dto.UserCredentialResponse;
+import com.drossdrop.authservice.dto.UserRabbitMQ;
 import com.drossdrop.authservice.entity.UserCredential;
+import com.drossdrop.authservice.rabbitmq.RabbitMQProducer;
 import com.drossdrop.authservice.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,14 +16,17 @@ public class AuthService {
     private UserCredentialRepository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private RabbitMQProducer rabbitMQProducer;
 
     public String saveUser(UserCredential credential) {
         credential.setPassword(passwordEncoder.encode(credential.getPassword()));
         repository.save(credential);
-        return "user added to the system";
+        UserRabbitMQ mappedUser = mapToUserRabbitMQ(credential);
+        rabbitMQProducer.sendUser(mappedUser);
+        return "User added to the system";
     }
 
     public String generateToken(String username) {
@@ -31,5 +37,38 @@ public class AuthService {
         jwtService.validateToken(token);
     }
 
+    public UserCredentialResponse getUserById(Integer id) {
+        UserCredential userCredential = repository.findById(id).orElseThrow();
+        return mapToUserCredentialResponse(userCredential);
+    }
 
+    private UserCredentialResponse mapToUserCredentialResponse(UserCredential userCredential) {
+        return UserCredentialResponse.builder()
+                .id(String.valueOf(userCredential.getId()))
+                .username(userCredential.getUsername())
+                .email(userCredential.getEmail())
+                .roleName(userCredential.getRoleName())
+                .build();
+    }
+
+    private UserRabbitMQ mapToUserRabbitMQ(UserCredential userCredential) {
+        return UserRabbitMQ.builder()
+                .id(String.valueOf(userCredential.getId()))
+                .username(userCredential.getUsername())
+                .email(userCredential.getEmail())
+                .build();
+    }
+
+    public String acceptTOS(String accept, String subject) {
+        if (!accept.equals("true")) {
+            return "TOS not accepted";
+        }
+        UserCredential userCredential = repository.findById(Integer.valueOf(subject)).orElseThrow();
+        repository.save(userCredential);
+        return String.format("TOS accepted for user %s", userCredential.toString());
+    }
+
+    public void deleteUserById(Integer id) {
+        repository.deleteById(id);
+    }
 }
