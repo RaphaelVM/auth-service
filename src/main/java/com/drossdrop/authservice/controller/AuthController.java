@@ -67,11 +67,9 @@ public class AuthController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteUser(@PathVariable Integer id) {
-        try {
-            service.deleteUserById(id);
-        } catch (Exception e) {
-            return String.format("User with id %d does not exist", id);
+        if (service.deleteUserById(id)) {
+            return String.format("User with id %d is deleted", id);
         }
-        return String.format("User with id %d is deleted", id);
+        return String.format("User with id %d is not deleted", id);
     }
 }

@@ -68,7 +68,12 @@ public class AuthService {
         return String.format("TOS accepted for user %s", userCredential.toString());
     }
 
-    public void deleteUserById(Integer id) {
-        repository.deleteById(id);
+    public Boolean deleteUserById(Integer id) {
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
