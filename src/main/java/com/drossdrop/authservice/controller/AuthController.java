@@ -56,13 +56,15 @@ public class AuthController {
     @PostMapping("/tos")
     @ResponseStatus(HttpStatus.OK)
     public String acceptTOS(@RequestParam("accept") String accept, @RequestHeader("Authorization") String authorizationHeader) {
+        LOGGER.info("====== Accept value: " + accept);
         String jwtToken = authorizationHeader.substring(7);
+        LOGGER.info("====== Token value: " + jwtToken);
         String subject = jwtService.getSubjectFromToken(jwtToken);
-        LOGGER.info("Subject from token: " + subject);
+        LOGGER.info("======Subject from token: " + subject);
         return service.acceptTOS(accept, subject);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteUser(@PathVariable Integer id) {
         try {

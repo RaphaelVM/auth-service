@@ -1,5 +1,6 @@
 package com.drossdrop.authservice.service;
 
+import com.drossdrop.authservice.controller.AuthController;
 import com.drossdrop.authservice.entity.UserCredential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -7,6 +8,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -15,6 +18,7 @@ import java.util.*;
 @Component
 public class JwtService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtService.class);
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
@@ -46,9 +50,8 @@ public class JwtService {
     }
 
     public String getSubjectFromToken(String token) {
-
         Claims claims = decodeToken(token);
-
+        LOGGER.info("====== Claims value: " + claims);
         return claims.getSubject();
     }
 
