@@ -22,16 +22,14 @@ public class AuthConfig {
         return new CustomUserDetailsService();
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .authorizeHttpRequests()
-//                    .requestMatchers("/api/auth/register", "/api/auth/token").permitAll()
-//                    .requestMatchers("/api/auth/validate").hasRole("ADMIN")
-                .requestMatchers("/api/auth/register", "/api/auth/token", "/api/auth/validate").permitAll()
-                .and()
-                .build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/auth/register", "/api/auth/token", "/api/auth/validate").permitAll()
+//                .and()
+//                .build();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

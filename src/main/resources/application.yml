@@ -40,7 +40,7 @@ eureka:
 
 logging:
     level:
-        root: TRACE
+        root: DEBUG
 ### End Kubernetes
 
 ### Local
