@@ -5,6 +5,8 @@ import com.drossdrop.authservice.dto.UserCredentialResponse;
 import com.drossdrop.authservice.entity.UserCredential;
 import com.drossdrop.authservice.service.AuthService;
 import com.drossdrop.authservice.service.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     private AuthService service;
     @Autowired
@@ -54,7 +58,7 @@ public class AuthController {
     public String acceptTOS(@RequestParam("accept") String accept, @RequestHeader("Authorization") String authorizationHeader) {
         String jwtToken = authorizationHeader.substring(7);
         String subject = jwtService.getSubjectFromToken(jwtToken);
-
+        LOGGER.info("Subject from token: " + subject);
         return service.acceptTOS(accept, subject);
     }
 
