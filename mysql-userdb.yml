@@ -56,7 +56,7 @@ spec:
   selector:
     matchLabels:
       app: userdb
-  replicas: 1
+#  replicas: 1
   template:
     metadata:
       labels:
@@ -80,6 +80,13 @@ spec:
           volumeMounts:
             - name: mysql-initdb
               mountPath: /docker-entrypoint-initdb.d
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
 
       volumes:
         - name: mysql-initdb
@@ -114,3 +121,30 @@ spec:
   selector:
     app: userdb
   clusterIP: None
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: userdb-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: userdb
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: 400Mi
