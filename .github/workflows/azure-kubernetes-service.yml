@@ -39,7 +39,7 @@ env:
   CONTAINER_NAME: "auth-service"
   RESOURCE_GROUP: "drossdropRg"
   CLUSTER_NAME: "aks-drossdrop"
-  DEPLOYMENT_MANIFEST_PATH: "/kubernetes/*.yml"
+  DEPLOYMENT_MANIFEST_PATH: "/deployment"
 
 jobs:
   buildImage:
