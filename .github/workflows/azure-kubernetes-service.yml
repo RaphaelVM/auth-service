@@ -63,9 +63,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Builds and pushes an image up to your Azure Container Registry
-      - name: Build and push image to ACR
-        run: |
-          az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:1 --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+#       - name: Build and push image to ACR
+#         run: |
+#           az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:1 --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
   deploy:
     permissions:
@@ -106,4 +106,6 @@ jobs:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:1
+            raphaelfontys/auth-service:master
+#           images: |
+#             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:1
