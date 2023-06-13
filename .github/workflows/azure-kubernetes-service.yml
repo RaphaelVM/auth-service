@@ -35,7 +35,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "drossdropauthservic.azurecr.io"
+  AZURE_CONTAINER_REGISTRY: "drossdropauthservice.azurecr.io"
   CONTAINER_NAME: "auth-service"
   RESOURCE_GROUP: "drossdropRg"
   CLUSTER_NAME: "aks-drossdrop"
