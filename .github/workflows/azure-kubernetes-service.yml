@@ -35,7 +35,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "drossdropauthservice.azurecr.io"
+  AZURE_CONTAINER_REGISTRY: "drossdropauthservice"
   CONTAINER_NAME: "auth-service"
   RESOURCE_GROUP: "drossdropRg"
   CLUSTER_NAME: "aks-drossdrop"
@@ -106,4 +106,4 @@ jobs:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:1
